@@ -9,3 +9,7 @@ __pycache__/
 *.mo
 *.db
 *.egg-info/
+
+
+# react/Vite
+frontend/node_modules
