@@ -1,23 +1,12 @@
-from django.http import JsonResponse,  Http404
-from .models import Quiz
-# Create your views here.
-
+from django.http import JsonResponse
+from .models import Quiz, Question
 
 def quizzes_list(request):
-    quizzes = list(Quiz.objects.values('id','title'))
-    return JsonResponse({"quizzes": quizzes})
+    quizzes = Quiz.objects.all().values("id", "title")
+    return JsonResponse({"quizzes": list(quizzes)})
 
 def quiz_questions(request, quiz_id):
-    try:
-        quiz = Quiz.objects.get(id=quiz_id)
-    except Quiz.DoesNotExtst:
-        raise Http404("Quiz not Found!")
-    
-    questions = []
-    for q in quiz.questions.all():
-        questions.append({
-            "id": q.id,
-            "question_text":q.question_text,
-            "options":q.options,
-        })
-    return JsonResponse({"quiz":{"id":quiz.id,"title":quiz.title,"questions":quiz.questions}})
+    questions = Question.objects.filter(quiz_id=quiz_id).values(
+        "id", "question_text", "options", "correct_index"
+    )
+    return JsonResponse({"questions": list(questions)})

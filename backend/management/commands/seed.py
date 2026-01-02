@@ -12,4 +12,5 @@ class Command(BaseCommand):
             options = ["40", "60", "70"],
             correct_index = 1,
         )
+        
         self.stdout.write(self.style.SUCCESS("DB CREATED SUCCESFULLY!"))
