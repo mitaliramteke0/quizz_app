@@ -22,7 +22,7 @@ class Question(models.Model):
     quiz = models.ForeignKey(Quiz, related_name='questions',on_delete=models.CASCADE)
     question_text =  models.CharField(max_length=500)
     options = models.JSONField() # to store option as json
-    correct_index = models.IntegerField # to check index of correct option
+    correct_index = models.IntegerField(default=0) # to check index of correct option
 
     def __str__(self):
-        return f"{self.quiz.title} - {self.question_test[:50]}"
+        return self.question_text
